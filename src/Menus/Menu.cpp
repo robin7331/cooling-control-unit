@@ -5,7 +5,6 @@
 Menu::Menu(Adafruit_SSD1306 *display, int FPS) {
    this->display = display;
    this->m_fps = FPS;
-
 }
 
 void Menu::update() {

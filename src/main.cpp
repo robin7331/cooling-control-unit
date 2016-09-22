@@ -8,8 +8,8 @@
 #define NUMOFTEMPSAMPLES 4
 #define TEMPSAMPLESPERSECOND 10
 #define DISPLAYFPS 8
-
 #define OLED_RESET 4
+#define DISPLAY_ADRESS 0x3C
 
 
 const int PinCLK = PD2;                   // Used for generating interrupts using CLK signal
@@ -43,7 +43,7 @@ void onRotaryTurn(bool clockwise, int amount, RotaryDriver *driver) {
 }
 
 void onRotaryButton(RotaryDriver *driver) {
-   menuScroller->nextMenu();
+   menuScroller->handleButtonPress(driver);
 }
 
 void setup() {
@@ -56,7 +56,7 @@ void setup() {
    // free(scanner);
 
    Adafruit_SSD1306 *display = new Adafruit_SSD1306(OLED_RESET);
-   display->begin(SSD1306_SWITCHCAPVCC, 0x3C);
+   display->begin(SSD1306_SWITCHCAPVCC, DISPLAY_ADRESS);
    display->setTextWrap(false);
 
 
@@ -66,11 +66,12 @@ void setup() {
    tempMenu->sayHi();
    menuScroller->addMenu(tempMenu, 0);
 
-   hotFanSettingsMenu = new ChooseIntegerMenu(display, 1, "HOT FAN", 0);
+   hotFanSettingsMenu = new ChooseIntegerMenu(display, 1, "HOT FAN", 0, 0);
    menuScroller->addMenu(hotFanSettingsMenu, 1);
 
-   coldFanSettingsMenu = new ChooseIntegerMenu(display, 1, "COLD FAN", 0);
+   coldFanSettingsMenu = new ChooseIntegerMenu(display, 1, "COLD FAN", 0, 1);
    menuScroller->addMenu(coldFanSettingsMenu, 2);
+
 
    menuScroller->setMenu(0);
 

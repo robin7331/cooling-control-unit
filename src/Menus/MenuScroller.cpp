@@ -38,7 +38,6 @@ void MenuScroller::nextMenu() {
 
 void MenuScroller::previousMenu() {
    this->m_currentIndex --;
-
    if (this->m_currentIndex < 0)
       this->m_currentIndex = (MENU_COUNT - 1);
 }
